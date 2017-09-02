@@ -63,6 +63,27 @@ class PayCoin extends Config {
 	}
 
 
+    public function readAllTaxi () {
+        $query = "SELECT
+				    coin,time,details
+				FROM
+					" . $this->table_name . ";
+
+		$stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->taxiid);
+		$stmt->execute();
+
+		$this->all_list = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        //    $row['username'] = '<a href="'.MAIN_URL.'/taxi/'.$row['username'].'"></a>';
+            $this->all_list[] = $row;
+        }
+        return $this->all_list;
+    }
+
+
+	
     public function readAllOneTaxi () {
         $query = "SELECT
 				    coin,time,details
